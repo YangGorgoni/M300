@@ -1,6 +1,6 @@
 #  M300
 
-**Modul 300 LB02 **
+**Modul 300 LB02
 
 Yang Gorgoni
 
