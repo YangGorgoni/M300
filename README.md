@@ -1,6 +1,4 @@
-# 300
-
-Modul 300 LB02
+#  Modul 300
 
 Yang Gorgoni
 
