@@ -13,7 +13,7 @@ Inhaltsverzeichnis
 * 01 - GitHub Account
 * 02 - Git Client
 * 03 - VirtualBox
-* 04 - Vagrant)
+* 04 - Vagrant
 * 05 - Visual Studio Code
 * 06 - Fazit / Reflexion
 * 07 - Quellenverzeichnis
@@ -122,12 +122,29 @@ Hierzu müssen folgende Schritte durchgeführt werden:
 |    $ git push |      pushen (hochladen) |
 
 
+## 03 - VirtualBox
 
+ Wie man es schon kennt, muss man eine VM erstellen mit Ubuntu in Virtual Box. Das werde ich nicht dokumentieren, da das nichts neues ist und ich schon weiss wie das funktioniert.
 
+## 04 - Vagrant
 
+Wenn man schon einmal selber die VM's erstellt hat, dann weiss man für mehrere braucht man lange. Für eine schnellere Variante gibt es Vagrant. Mit dem können VM's automatisch erstellt werden mit nur einem kurzen Code.
 
+Im gewünschten Verzeichnis kann man mit einer Zeile, die VM erzeugen:
+
+| Befehle      |    Bedeutung    |
+| ------------- |:-------------:|
+|  $ vagrant init ubuntu/xenial64 |   Vagrantfile erzeugen |
+|  $ vagrant up --provider virtualbox | Virtuelle Maschine erstellen & starten |
+
+## 05 - Visual Studio
+
+Ich habe mich nicht für Visual Studio entschieden, sondern für Atom. Diese wurde mir von einem Kollegen empfohlen. Das ist ein Editor. Dieser wird benutzt, um dort zu dokumentieren, für eine gute Übersicht. Natürich muss es zuerst mit Github verbunden werden.
 
 
 ## Eigene Lernumgebung
+
+
+
 
 ## Sicherheitsaspekte sind implementiert
