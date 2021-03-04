@@ -8,4 +8,7 @@ Hier handelt es sich um eine Dokumentation für die LB02 im Modul 300. Da werde 
 
 ## Einrichtung
 
+
 ## Eigene Lernumgebung
+
+## Sicherheitsaspekte sind implementiert
