@@ -94,6 +94,7 @@ Hierzu müssen folgende Schritte durchgeführt werden:
 1. Terminal Bash öffnen
 2. Ordner im gewünschtenn Verzeichnis erstellen
 3. Repository mit SSH klonen:
+
 | Befehle      |    Bedeutung    |
 | ------------- |:-------------:|
 |  $ git clone git@github.com:YangGorgoni/M300.git    |      Klonen des Respository mit SSH  |
@@ -103,10 +104,13 @@ Hierzu müssen folgende Schritte durchgeführt werden:
 1. Terminal Bash öffnen
 2. Zum Verzeichnis gehen des repository
 3. Dateien dem Upload hinzufügen:
+
 | Befehle      |    Bedeutung    |
 | ------------- |:-------------:|
 |  $ git add -a.  |      Upload wird "commited" > Kommentar zu Dokumentationszwecken ist dafür notwendig  |
+
 4. Upload commiten:
+
 | Befehle      |    Bedeutung    |
 | ------------- |:-------------:|
 |   $ git commit -m "Mein Kommentar" |      commiten |
