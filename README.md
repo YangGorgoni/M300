@@ -126,7 +126,8 @@ Hierzu müssen folgende Schritte durchgeführt werden:
 
  Wie man es schon kennt, muss man eine VM erstellen mit Ubuntu in Virtual Box. Das werde ich nicht dokumentieren, da das nichts neues ist und ich schon weiss wie das funktioniert.
 
- ![ubuntu](C:\Users\yang\Pictures\ubuntu.png)
+![apache](https://github.com/YangGorgoni/M300/blob/main/pictures/apache.PNG)
+
 
 ## 04 - Vagrant
 
