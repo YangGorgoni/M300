@@ -126,6 +126,8 @@ Hierzu müssen folgende Schritte durchgeführt werden:
 
  Wie man es schon kennt, muss man eine VM erstellen mit Ubuntu in Virtual Box. Das werde ich nicht dokumentieren, da das nichts neues ist und ich schon weiss wie das funktioniert.
 
+ ![ubuntu](C:\Users\yang\Pictures\ubuntu.png)
+
 ## 04 - Vagrant
 
 Wenn man schon einmal selber die VM's erstellt hat, dann weiss man für mehrere braucht man lange. Für eine schnellere Variante gibt es Vagrant. Mit dem können VM's automatisch erstellt werden mit nur einem kurzen Code.
