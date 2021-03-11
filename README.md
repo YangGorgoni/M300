@@ -15,8 +15,9 @@ Inhaltsverzeichnis
 * 03 - VirtualBox
 * 04 - Vagrant
 * 05 - Visual Studio Code
-* 06 - Fazit / Reflexion
-* 07 - Quellenverzeichnis
+* 06 - Sicherheitsaspekte sind implementiert
+* 07 - Fazit / Reflexion
+* 08 - Glosar
 
 ## 01 - Github Account
 
@@ -45,9 +46,10 @@ In der Repository erstellt man ein Readme File um dann hier dokuemntieren zu kö
 
 1. Terminal Bash öffnen
 2. Den Befehl eingeben mit der Emailadresse des Github Accounts:
-
-| $ ssh-keygen -t rsa -b 4096 -C 'DEINE EMAILADRESSE'        |    Regeniert den SSH Key     |
+| Befehl      |    Bedeutung    |
 | ------------- |:-------------:|
+| $ ssh-keygen -t rsa -b 4096 -C 'DEINE EMAILADRESSE'        |    Regeniert den SSH Key     |
+
 
 3. Danach wird ein Key erstellt und man muss mit Enter bestätigen.
 
@@ -126,7 +128,10 @@ Hierzu müssen folgende Schritte durchgeführt werden:
 
  Wie man es schon kennt, muss man eine VM erstellen mit Ubuntu in Virtual Box. Das werde ich nicht dokumentieren, da das nichts neues ist und ich schon weiss wie das funktioniert.
 
-![apache](https://github.com/YangGorgoni/M300/blob/main/pictures/apache.PNG)
+ Auf dem Bild sieht man dann auch den Ubuntu Desktop:
+
+
+![Ubuntu Desktop](https://github.com/YangGorgoni/M300/blob/main/pictures/ubuntu1.PNG)
 
 
 ## 04 - Vagrant
@@ -140,9 +145,126 @@ Im gewünschten Verzeichnis kann man mit einer Zeile, die VM erzeugen:
 |  $ vagrant init ubuntu/xenial64 |   Vagrantfile erzeugen |
 |  $ vagrant up --provider virtualbox | Virtuelle Maschine erstellen & starten |
 
+Das Vagrantfile kann auch angepasst werden wie folgendermassen:
+
+````
+Vagrant.configure("2") do |config|
+  config.vm.define "SRV01" do |srv01|
+  srv01.vm.box = "ubuntu/xenial64"
+  srv01.vm.provider "virtualbox" do |vb|
+  vb.memory = "512"
+end
+````
+### Befehle Vagrant
+
+````
+Vagrant box add [box add]: downloaded Vagrant image local store
+
+Vagrant box remove [box add]: entfernt Vagrant image local store
+
+Vagrant box list: Zeigt downloaded boxes an
+
+vagrant init [box]: initialisiert Vagrantfile
+
+Vagrant up: startet VM's aus Vagrantfile
+
+Vagrant status: Zeigt Status der Vagrant box
+
+Vagrant halt: stopt VM's
+
+Vagrant destroy: zerstört VM's
+
+Vagrant ssh [vmname]: Verbindet per ssh auf VM
+
+vagrant version: zeig Version von Vagrant
+
+vagrant port: Zeigt portmapping zwischen host und gast
+
+````
+### GIT Befehle
+
+````
+git add -A : Änderungen im aktuellen Verzeichnis zum Zwischenspeicher hinzufügen
+
+git commit : Änderungen auf dem lokalen Git speichern
+
+git push : Lokales Git auf Github synchronisieren
+
+git clone : Github Repo herunterladen
+
+git init : Repo initialisieren
+
+````
+
+### Testing
+
+Apache2
+Als erstes wird getestet auf dem Ubuntu Desktop, ob der Apache2 überhaupt aufrufbar ist.
+
+![apache](https://github.com/YangGorgoni/M300/blob/main/pictures/apache.PNG)
+
+###### Testergebnis: Mit Erfolg
+
+Mit Vagrant eine Maschine erzeugt worden:
+
+![vagrant](https://github.com/YangGorgoni/M300/blob/main/pictures/Bild_2021-03-11_175905.png)
+
+###### Testergebnis: Mit Erfolg
+
 ## 05 - Visual Studio
 
 Ich habe mich nicht für Visual Studio entschieden, sondern für Atom. Diese wurde mir von einem Kollegen empfohlen. Das ist ein Editor. Dieser wird benutzt, um dort zu dokumentieren, für eine gute Übersicht. Natürich muss es zuerst mit Github verbunden werden.
 
 
-## Sicherheitsaspekte sind implementiert
+## 06 -  Sicherheitsaspekte sind implementiert
+
+### Firewall
+
+Mit einem vagrantfile wurde eine virtuelle Maschine erstellt, die Firewall-Regeln hat.
+
+````
+Vagrant.configure("2") do |config|
+config.vm.box = "debian/buster64"
+config.vm.provider "virtualbox" do |vb|
+end
+config.vm.provision "shell", inline: <<-SHELL
+sudo apt-get install ufw
+sudo ufw --force enable
+sudo ufw allow 80/tcp
+sudo ufw allow from any to any port 22
+sudo ufw allow from any to any port 3306
+SHELL
+end
+
+````
+### Benutzer und Rechte
+
+Mit einem Script wurde ein Benutzer, eine Gruppe und bestimmte Berechtigungen auf ein Textfile gesetzt.
+
+````
+Vagrant.configure("2") do |config|
+config.vm.box = "debian/buster64"
+config.vm.provider "virtualbox" do |vb|
+end
+config.vm.provision "shell", inline: <<-SHELL
+sudo useradd yang
+sudo groupadd informatik
+sudo usermod -aG informatik yang
+sudo touch test.txt
+sudo chmod 774 test.txt
+sudo chown yang test.txt
+sudo chgrp informatik test.txt
+SHELL
+end
+
+````
+### SSH 
+
+## Glosar
+
+|   Wort   |    Bedeutung    |
+| ------------- |:-------------:|
+|  Linux |   ist ein Open Source Betriebssystem. Die Vorteile von Linux liegen darin, dass jeder den Code einsehen und benutzen kann. So können Sicherheitslücken besser geschlossen werden und es kann viel optimiert werden. |
+|  Virtualisierung | soll die Wartung von Arbeitsplätzen oder Servern vereinfachen. Anstelle von Vielen Servern, werden nur weniger eingesetzt. Es wird also weniger Hardware gebraucht. Auf den Servern ist ein Programm für die Virtualisierung installiert. Nun lassen sich auf diesem Server mithilfe der Virtualisierung Virtuele Server, Clients und Netze installieren. |
+|  Vagrant |  ist eine Freie Software für das erstellen von Virtuellen Maschinen. Mit Vagrant lassen sich auch einige Arbeitsschritte automatisieren. |
+|  Git |  ist eine Freeware welche zur Pensionierung und Veröffentlichung/Verteilung von Programmen gebraucht wird. |
