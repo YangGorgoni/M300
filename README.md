@@ -238,6 +238,9 @@ SHELL
 end
 
 ````
+
+![firewall](https://github.com/YangGorgoni/M300/blob/main/pictures/Firewall.PNG)
+
 ### Benutzer und Rechte
 
 Mit einem Script wurde ein Benutzer, eine Gruppe und bestimmte Berechtigungen auf ein Textfile gesetzt.
@@ -259,6 +262,8 @@ SHELL
 end
 
 ````
+![Benutzer](https://github.com/YangGorgoni/M300/blob/main/pictures/Benutzer.PNG)
+
 ### SSH
 
 ## Glosar
