@@ -131,7 +131,7 @@ Hierzu müssen folgende Schritte durchgeführt werden:
  Auf dem Bild sieht man dann auch den Ubuntu Desktop:
 
 
-![Ubuntu Desktop](https://github.com/YangGorgoni/M300/blob/main/pictures/ubuntu1.PNG)
+![Ubuntu Desktop](https://github.com/YangGorgoni/M300/blob/main/pictures/ubuntudesktp.PNG)
 
 
 ## 04 - Vagrant
@@ -148,13 +148,25 @@ Im gewünschten Verzeichnis kann man mit einer Zeile, die VM erzeugen:
 Das Vagrantfile kann auch angepasst werden wie folgendermassen:
 
 ````
-Vagrant.configure("2") do |config|
-  config.vm.define "SRV01" do |srv01|
-  srv01.vm.box = "ubuntu/xenial64"
-  srv01.vm.provider "virtualbox" do |vb|
-  vb.memory = "512"
+Vagrant.configure(2) do |config|
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.network "forwarded_port", guest:80, host:8080, auto_correct: true
+  config.vm.synced_folder ".", "/var/www/html"  
+  config.vm.provider "virtualbox" do |vb|
+  vb.memory = "512"  
+    end
+
+  config.vm.provision "shell", inline: <<-SHELL
+  sudo apt-get update
+  sudo apt-get -y install apache2
+  SHELL
 end
+
 ````
+### Netzwerkplan
+
+![Netzplan](https://github.com/YangGorgoni/M300/blob/main/pictures/Netzplan.PNG)
+
 ### Befehle Vagrant
 
 ````
@@ -221,6 +233,8 @@ Ich habe mich nicht für Visual Studio entschieden, sondern für Atom. Diese wur
 
 ### Firewall
 
+Eine Firewall ist ein Sicherungssystem, das ein Rechnernetz oder einen einzelnen Computer vor unerwünschten Netzwerkzugriffen schützt und ist weiter gefasst auch ein Teilaspekt eines Sicherheitskonzepts.
+
 Mit einem vagrantfile wurde eine virtuelle Maschine erstellt, die Firewall-Regeln hat.
 
 ````
@@ -240,6 +254,41 @@ end
 ````
 
 ![firewall](https://github.com/YangGorgoni/M300/blob/main/pictures/Firewall.PNG)
+
+### Reverse Proxy
+
+Ein Reverse Proxy ("umgekehrter Proxy") ist eine zusätzliche Schutzmaßnahme, die vor einen oder mehreren Webservern geschaltet werden kann.
+Im Gegensatz zu einem Proxy wird die Adressumsetzung in der entgegengesetzten Richtung durchgeführt.
+Die Aufgabe des Reverse Proxys ist es Anfragen von Servern stellvertretend anzunehmen und an den entsprechenden Client weiterzuleiten.
+Dabei gewährt der Reverse Proxy einem oder mehreren Clients eines externen Netzes den Zugriff auf ein internes Netz.
+
+````
+Vagrant.configure("2") do |config|
+config.vm.box = "debian/buster64"
+config.vm.provider "virtualbox" do |vb|
+end
+config.vm.provision "shell", inline: <<-SHELL
+sudo apt-get install apache2 -y
+sudo apt-get install libapache2-mod-proxy-html -y
+sudo apt-get install libxml2-dev -y
+sudo a2enmod proxy
+sudo a2enmod proxy_html
+sudo a2enmod proxy_http
+sudo systemctl restart apache2
+sudo echo "ServerName localhost" >> /etc/apache2/apache2.conf
+sudo systemctl restart apache2
+sudo touch /etc/apache2/sites-enabled/001-reverseproxy.conf
+sudo echo "ProxyRequests Off
+    <Proxy *>
+        Order deny,allow
+        Allow from all
+    </Proxy>
+    ProxyPass /master http://master
+    ProxyPassReverse /master http://master" >> /etc/apache2/sites-enabled/001-reverseproxy.conf
+SHELL
+end
+
+````
 
 ### Benutzer und Rechte
 
@@ -265,6 +314,17 @@ end
 ![Benutzer](https://github.com/YangGorgoni/M300/blob/main/pictures/Benutzer.PNG)
 
 ### SSH
+Diese drei wichtigen Eigenschaften führten zum Erfolg von ssh:
+
+* Authentifizierung der Gegenstelle, kein Ansprechen falscher Ziele
+* Verschlüsselung der Datenübertragung, kein Mithören durch Unbefugte
+* Datenintegrität, keine Manipulation der übertragenen Daten
+
+Wem die Authentifizierung über Passwörter trotz der Verschlüsselung zu unsicher ist, der benutzt das Public-Key-Verfahren. Hierbei wird asymmetrische Verschlüsselung genutzt, um den Benutzer zu authentifizieren.
+
+
+
+
 
 ## Glosar
 
