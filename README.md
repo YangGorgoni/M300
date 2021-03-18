@@ -323,7 +323,13 @@ Diese drei wichtigen Eigenschaften führten zum Erfolg von ssh:
 Wem die Authentifizierung über Passwörter trotz der Verschlüsselung zu unsicher ist, der benutzt das Public-Key-Verfahren. Hierbei wird asymmetrische Verschlüsselung genutzt, um den Benutzer zu authentifizieren.
 
 
+## Vergleich Vorwissen - Wissenszuwachs
 
+Vorher wusste ich so ziemlich gar nichts über diese Themen ausser Virtualbox. Ich wusste wie man ein Ubuntu Server aufsetzt. Ich wusste am Anfang nicht was ein Atom ist. Jetzt weiss ich, dass ist ein Editor, nur besser und übersichtlicher.
+
+## Reflexion
+
+Ich habe einiges lernen können, über diese Themen. Vor allem wusste ich nicht was Vagrant ist und jetzt weiss ich was es macht und wie ich ein solches File erzeugen kann. Was ich auch noch gelernt habe ist, was Github überhaupt ist und was ein Markdown ist.
 
 
 ## Glosar
