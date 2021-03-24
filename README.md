@@ -17,7 +17,7 @@ Inhaltsverzeichnis
 * 05 - Visual Studio Code
 * 06 - Sicherheitsaspekte sind implementiert
 * 07 - Fazit / Reflexion
-* 08 - Glosar
+* 08 - Glossar
 
 ## 01 - Github Account
 
@@ -329,10 +329,10 @@ Vorher wusste ich so ziemlich gar nichts über diese Themen ausser Virtualbox. I
 
 ## Reflexion
 
-Ich habe einiges lernen können, über diese Themen. Vor allem wusste ich nicht was Vagrant ist und jetzt weiss ich was es macht und wie ich ein solches File erzeugen kann. Was ich auch noch gelernt habe ist, was Github überhaupt ist und was ein Markdown ist. Mit dem kann man in Atom eine Dokumentation schreiben und gleichzeitig auf Github hochladen mit dem pushen. Anfangs wusste ich nicht genau wie das geht, nach einer Erklärung wusste ich das dann. Bilder konnte ich mit der Zeit dann auch schon hochladen. Die bestimmten Befehle wie man Tabellen oder Schriften gestalten möchte, habe ich kennengelernt.
+Ich hatte Spass diese Aufgaben zu erledigen, da ich offen für neue Sachen bin. Ich habe einiges lernen können, über diese Themen. Vor allem wusste ich nicht was Vagrant ist und jetzt weiss ich was es macht und wie ich ein solches File erzeugen kann. Es ist beeindruckend was das für ein Programm ist. Was ich auch noch gelernt habe ist, was Github überhaupt ist und was ein Markdown ist. Mit dem kann man in Atom eine Dokumentation schreiben und gleichzeitig auf Github hochladen mit dem pushen. Anfangs wusste ich nicht genau wie das geht, nach einer Erklärung wusste ich das dann. Bilder konnte ich mit der Zeit dann auch schon hochladen. Die bestimmten Befehle wie man Tabellen oder Schriften gestalten möchte, habe ich kennengelernt.
 
 
-## Glosar
+## Glossar
 
 |   Wort   |    Bedeutung    |
 | ------------- |:-------------:|
