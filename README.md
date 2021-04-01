@@ -46,9 +46,10 @@ In der Repository erstellt man ein Readme File um dann hier dokuemntieren zu kö
 
 1. Terminal Bash öffnen
 2. Den Befehl eingeben mit der Emailadresse des Github Accounts:
+
 | Befehl      |    Bedeutung    |
 | ------------- |:-------------:|
-| $ ssh-keygen -t rsa -b 4096 -C 'DEINE EMAILADRESSE'        |    Regeniert den SSH Key     |
+| $ ssh-keygen -t rsa -b 4096 -C 'DEINE EMAILADRESSE'        |    Regeniert den SSH Key   |
 
 
 3. Danach wird ein Key erstellt und man muss mit Enter bestätigen.
