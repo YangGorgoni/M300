@@ -354,7 +354,7 @@ Bei der Containerisierung handelt es sich um eine Art Virtualisierung auf Anwend
 
 Hier ein Beispiel, wie das aussieht:
 
-![Containerisierung](https://github.com/YangGorgoni/M300/blob/main/pictures/container.PNG)
+![Containerisierung](https://github.com/YangGorgoni/M300/blob/main/pictures/container.png)
 
 ### Welche Vorteile gibt es?
 
@@ -378,7 +378,7 @@ Vorteile der Containerisierung mit Docker Die Containerisierung mit der frei ver
 * die einfache Verwaltung vieler Container über Orchestrierungs-Tools wie Kubernetes,
 * das schnelle Starten von Containern
 
-![Docker](https://github.com/YangGorgoni/M300/blob/main/pictures/docker.PNG)
+![Docker](https://github.com/YangGorgoni/M300/blob/main/pictures/docker.png)
 
 Mein Wissen: Ich habe noch nie was von Docker oder Containerisierung gehört. Mit Inputs von meinem Lehrer habe ich verstanden, was das ungefähr ist. Ich konnte mir jedoch aber noch nicht richtig vorstellen, wie alles funktioniert. Ich habe angefangen dies umzusetzen und konnte einiges lernen. Jetzt ist mein Verständnis dafür mehr da.
 
