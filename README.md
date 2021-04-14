@@ -6,6 +6,8 @@ Einleitung
 
 Hier handelt es sich um eine Dokumentation für die LB02 im Modul 300. Da werde ich meine Arbeitsschritte festhalten und einige Sachen, die ich gelernt habe.
 
+# LB01
+
 ## Einrichtung
 
 Inhaltsverzeichnis
@@ -332,7 +334,6 @@ Vorher wusste ich so ziemlich gar nichts über diese Themen ausser Virtualbox. I
 
 Ich hatte Spass diese Aufgaben zu erledigen, da ich offen für neue Sachen bin. Ich habe einiges lernen können, über diese Themen. Vor allem wusste ich nicht was Vagrant ist und jetzt weiss ich was es macht und wie ich ein solches File erzeugen kann. Es ist beeindruckend was das für ein Programm ist. Was ich auch noch gelernt habe ist, was Github überhaupt ist und was ein Markdown ist. Mit dem kann man in Atom eine Dokumentation schreiben und gleichzeitig auf Github hochladen mit dem pushen. Anfangs wusste ich nicht genau wie das geht, nach einer Erklärung wusste ich das dann. Bilder konnte ich mit der Zeit dann auch schon hochladen. Die bestimmten Befehle wie man Tabellen oder Schriften gestalten möchte, habe ich kennengelernt.
 
-
 ## Glossar
 
 |   Wort   |    Bedeutung    |
@@ -341,3 +342,88 @@ Ich hatte Spass diese Aufgaben zu erledigen, da ich offen für neue Sachen bin. 
 |  Virtualisierung | soll die Wartung von Arbeitsplätzen oder Servern vereinfachen. Anstelle von Vielen Servern, werden nur weniger eingesetzt. Es wird also weniger Hardware gebraucht. Auf den Servern ist ein Programm für die Virtualisierung installiert. Nun lassen sich auf diesem Server mithilfe der Virtualisierung Virtuele Server, Clients und Netze installieren. |
 |  Vagrant |  ist eine Freie Software für das erstellen von Virtuellen Maschinen. Mit Vagrant lassen sich auch einige Arbeitsschritte automatisieren. |
 |  Git |  ist eine Freeware welche zur Pensionierung und Veröffentlichung/Verteilung von Programmen gebraucht wird. |
+
+
+# LB02
+
+In diesem Abschnitt befindet zeige ich auf, was ich alles gelernt habe in der LB02. Es geht um die Themen Container, Docker, Sicherheit.
+
+## Was versteht man genau unter Containerisierung?
+
+Bei der Containerisierung handelt es sich um eine Art Virtualisierung auf Anwendungsebene, bei der mehrere isolierte Userspace-Instanzen auf einem einzelnen Kernel ausgeführt werden können. Diese Instanzen werden Container genannt. Container bieten eine Standardmethode um Anwendungscode, Laufzeitumgebung, Systemwerkzeugen, Systembibliotheken und Konfigurationen in einer Instanz zusammenzufassen. Container teilen sich einen Kernel (Betriebssystem), der auf der Hardware installiert ist.
+
+Hier ein Beispiel, wie das aussieht:
+
+![Containerisierung](https://github.com/YangGorgoni/M300/blob/main/pictures/container.PNG)
+
+### Welche Vorteile gibt es?
+
+* Performance Bei hohen, konkurrierenden Ressourcenanforderungen ist die Leistung von Anwendungen die aus einer Containerumgebung ausgeführt werden weitaus besser als bei der Ausführung in einer virtuellen Maschine.
+
+* Resourcenbedarf Container benötigen auf dem Server weniger Ressourcen als virtuelle Maschinen und sind normalerweise innerhalb weniger Sekunden gestartet.
+
+* Elastizität Container sind hochelastisch und müssen nicht mit einer bestimmten Menge an Ressourcen ausgestattet werden. Dies bedeutet, dass Container die Ressourcen des Servers effizienter und dynamischer nutzen können.
+
+## Docker
+
+Bei Docker geht es primär um das Verteilen von Anwendungen und Diensten, das sogenannte Deployment. Doch wie wurde das eigentlich früher gemacht? Nehmen wir an, ein Entwickler will seine frisch erstellte .NET-Webapplikation einer Kollegin zum lokalen Testen geben. Ganz früher war das noch so, dass die Kollegin zur Installation eine Anleitung mit Voraussetzungen und ggfs. auch manuelle Skripts bekam. Da stand dann z. B. in der Anleitung, dass Windows als Betriebssystem benötigt wird, dass das .NET Framework in einer bestimmten Version installiert sein muss, dass zur Ausführung eine bestimmte Datenbank benötigt wird usw. Es wird also für die Kollegin ein mühsames und aufwändiges Unterfangen, die Webapplikation lokal zum Laufen zu bekommen.
+
+Docker vereinfacht die Bereitstellung von Anwendungen, weil sich Container, die alle nötigen Pakete enthalten, leicht als Dateien transportieren und installieren lassen. Container gewährleisten die Trennung und Verwaltung der auf einem Rechner genutzten Ressourcen. Das beinhaltet laut Aussage der Entwickler: Code, Laufzeitmodul, Systemwerkzeuge, Systembibliotheken – alles was auf einem Rechner installiert werden kann.
+
+Vorteile der Containerisierung mit Docker Die Containerisierung mit der frei verfügbaren Software bietet zahlreiche Vorteile. Sie benötigt weniger Ressourcen als virtuelle Maschinen, schottet die Anwendungen aber dennoch sicher untereinander und vom Host-System ab. Ein Container lässt sich in Form einer Image-Datei einfach auf andere Systeme übertragen. Es ist keine neue Installation der Anwendung und ihrer Laufzeitumgebung notwendig.
+
+### Vorteile
+
+* die gute Skalierbarkeit durch die Nutzung vieler weiterer Container,
+* die einfache Verwaltung vieler Container über Orchestrierungs-Tools wie Kubernetes,
+* das schnelle Starten von Containern
+
+![Docker](https://github.com/YangGorgoni/M300/blob/main/pictures/docker.PNG)
+
+Mein Wissen: Ich habe noch nie was von Docker oder Containerisierung gehört. Mit Inputs von meinem Lehrer habe ich verstanden, was das ungefähr ist. Ich konnte mir jedoch aber noch nicht richtig vorstellen, wie alles funktioniert. Ich habe angefangen dies umzusetzen und konnte einiges lernen. Jetzt ist mein Verständnis dafür mehr da.
+
+## Umsetzung
+
+1. Als erstes muss man auf den eigenen Server über VPN zugreifen können über CMD.
+2. Korrektes Passwort eingeben.
+3. Man erstellt ein Dockerfile.
+4. Dort drin steht 'FROM httpd'
+5. Das Image bilden mit dem Befehl 'docker build -t webserver'
+6. schauen ob es erstellt ist 'docker images'
+7. Image starten 'docker run -dit --name webserver -p 5050:80 webserver' NICHT 8080, da der schon vergeben ist und das zu Konflikten kommen kann.
+
+## Testfälle
+
+Zugriff testen über den Webbrowser http://IPVONSERVER:5050
+
+![Apache](https://github.com/YangGorgoni/M300/blob/main/pictures/apache.PNG)
+
+Testergebnis: erfolgreich
+
+Funktioniert Whalesay?
+
+![whalesay](https://github.com/YangGorgoni/M300/blob/main/pictures/whalesay.PNG)
+
+Testergebnis: erfolgreich
+
+
+
+## Netzwerkplan
+
+![netplan](https://github.com/YangGorgoni/M300/blob/main/pictures/Netplan.PNG)
+
+
+
+
+## Befehle
+
+|   Befehle   |    Bedeutung    |
+| ------------- |:-------------:|
+|  docker version |  zeigt die Version an |
+|  docker run -dit --name imagename | startet das Image |
+|  docker images|  listet die images auf |
+|  docker ps |  zeigt aktive und beendete Containers an |
+|  docker build -t NAME |  bildet ein image |
+|  docker stop ID |  stoppt das image |
+|  docker rm ID |  löscht das image |
+|  docker rm ID --force |  löscht das image zwingend, auch wenn gestartet |
