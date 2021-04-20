@@ -427,3 +427,111 @@ Testergebnis: erfolgreich
 |  docker rm ID --force |  löscht das image zwingend, auch wenn gestartet |
 
 ## Sicherheiten
+
+Das Überwachen und Protokollieren von laufenden Containern ist sehr wichtig. Be den Microservices ist es wegen der höheren Zahl von Rechnern noch wichtiger.
+
+### Logging
+
+Die Logs können über den Befehl ````docker logs```` abgerufen werden. Es gibt mehrere Werte, die man über das Argument von ````docker````auswählen kann:
+
+* json-file (Das Standard-Logging)
+
+Ausgaben abholen:
+````
+$ docker run --name logtest ubuntu bash -c 'echo "stdout"; echo "stderr" >>2'
+$ docker logs logtest
+$ docker rm logtest
+````
+Laufende Ausgaben:
+````
+$ docker run -d --name streamtest ubuntu bash -c 'while true; do echo "tick"; sleep 1; done;'
+$ docker logs streamtest
+$ docker logs streamtest | wc -l
+$ docker rm streamtest
+````
+
+* syslog (Der Syslog-Treiber des Hosts)
+
+Protokollierung in das System-Log des Hosts:
+````
+$ docker run -d --log-driver=syslog ubuntu bash -c 'i=0; while true; do i=$((i+1)); echo "docker $i"; sleep 1; done;'
+$ tail -f /var/log/syslog
+````
+
+* none (Schaltet die Protokollierung ab)
+
+### Aspekte
+An was für Sicherheitsprobleme soll man denken?
+
+Kernel Exploits:
+
+Sollte ein Container eine Kernel Panic verursachen, zieht das den ganzen Host mit herunter. In VMs ist die Situation viel besser – ein Angreifer müsste einen Angriff sowohl durch den VM-Kernel als auch den Hypervisor leiten, bevor er an den Host-Kernel kommt.
+
+Denial-of-Service-(DoS-)Angriffe:
+
+Kann ein Container den Zugriff auf bestimmte Ressourcen ganz für sich beanspruchen – auch so etwas wie den Speicher oder esoterischere Ressourcen wie User IDs (UIDs) –, kann er die anderen Container auf dem Host verhungern lassen.
+
+Container-Breakouts:
+
+Ein Angreifer, der Zugriff auf einen Container erhält, sollte nicht dazu in der Lage sein, auf andere Container oder den Host zuzugreifen. Da die Benutzer nicht über Namensräume getrennt sind, bekommen alle Prozesse, die aus dem Container ausbrechen, auf dem Host die gleichen Privilegien wie im Container – ist man im Container root, so wird man auch root auf dem Host sein.
+
+Vergiftete Images:
+
+Man sollte sich sicher sein, dass die Images nicht manipuliert wurden, sondern sicher sind.
+
+Verratene Geheimnisse:
+
+Greift ein Container auf eine Datenbank oder einen Service zu, muss er sehr wahrscheinlich ein Geheimnis wie einen API-Schlüssel oder Benutzernamen und Passwort kennen.
+
+### Least Privilege
+
+Jeder Prozess und Container sollte nur mit so viel Zugriffsrechten und Ressourcen laufen, wie er gerade braucht, um seine Aufgaben zu erfüllen.
+
+Möglichkeiten:
+
+* Prozesse in Containern nicht als root laufen
+* Dateisysteme schreibgeschützt einsetzen
+* Kernel-Aufrufe, die Container ausführen kann, einschränken
+* Ressoucen begrenzen, um DoS-Angriffe zu verhindern
+
+### Container absichern
+
+Hier einige Absicherungsmethoden:
+
+* Container laufen in VM
+* Der Reverse-Proxy ist der einzige Container, der Port nach aussen freigibt
+* Alle Images laufen nicht als root
+* Images werden über eigenen Hash runtergeladen
+* Anwendung wird überwacht und es wird Alarm ausgelöst
+* Aktuelle Software
+
+### Weitere Sicherheitstipps
+
+* Netzwerkzugriff beschränken
+* setuid/setgid-Binaries entfernen
+* Speicher begrenzen
+
+````
+$ docker run -m 128m --memory-swap 128m amouat/stress stress --vm 1 --vm-bytes 127m -t 5s
+````
+
+* CPU beschränken
+````
+$ docker run -d --name load3 -c 512 amouat/stress
+````
+* Neustarts begrenzen
+````
+$ docker run -d --restart=on-failure:10 my-flaky-image
+````
+* Zugriffe aus Dateisysteme begrenzen
+````
+$ docker run --read-only ubuntu touch x
+````
+* Capabilities einschränken
+````
+$ docker run --cap-drop all --cap-add CHOWN ubuntu chown 100 /tmp
+````
+* Ressourcenbeschränkungen anwenden
+````
+$ docker run --ulimit cpu=12:14 amouat/stress stress --cpu 1
+````
