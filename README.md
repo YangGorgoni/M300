@@ -535,3 +535,55 @@ $ docker run --cap-drop all --cap-add CHOWN ubuntu chown 100 /tmp
 ````
 $ docker run --ulimit cpu=12:14 amouat/stress stress --cpu 1
 ````
+
+## Kubernetes
+
+Kubernetes ist ein Open-Source-System zur Automatisierung der Bereitstellung, Skalierung und Verwaltung von Container-Anwendungen.
+
+### Merkmale
+
+* Immutable (Unveränderlich) statt Mutable.
+* Deklarative statt Imperative (Ausführen von Anweisungen) Konfiguration.
+* Selbstheilende Systeme - Neustart bei Absturz.
+* Entkoppelte APIs – LoadBalancer / Ingress (Reverse Proxy).
+* Skalieren der Services durch Änderung der Deklaration.
+* Anwendungsorientiertes statt Technik (z.B. Route 53 bis AWS) Denken.
+* Abstraktion der Infrastruktur statt in Rechnern Denken.
+
+### Objekte
+
+* Pod - repräsentiert eine Gruppe von Anwendungs-Containern und Volumes, die in der gleichen Ausführungsumgebung laufen
+* ReplicaSet - bestimmen wieviele Exemplare eines Pods laufen und stellen sicher, dass die angeforderte Menge auch verfügbar ist
+* Deployment - erweitern ReplicaSets um deklarative Updates
+* Service - steuert den Zugriff auf einen Pod
+* Ingress - ermöglicht den Zugriff auf einen Service über einen URL
+
+### Kubernetes Cluster
+
+Bei einem Cluster wird ein Kubernetes Master und mehrere Worker erzeugt.
+
+Voraussetzungen sind genügend RAM für alle VM's.
+
+Die wichtigsten Konfigurationen:
+
+````
+master:
+  count: 1
+  cpus: 2
+  memory: 5120
+worker:
+  count: 2
+````
+Es wird ein Master und zwei Worker Nodes erstellt. Der Master und die Worker Nodes werden während der Installation automatisch miteinander gejoint.
+
+````
+use_dhcp: false  
+# Fixe IP Adressen mit welchen die IP fuer Master und Worker beginnen sollen
+ip:
+  master:   192.168.137.100
+  worker:   192.168.137.111
+# Netzwerk "private_network" fuer Host-only Netzwerk, "public_network" fuer Bridged Netzwerke
+net:
+  network_type: private_network
+````
+Die restlichen Standardeinstellungen wie Host-only Netzwerk mit fixen IP-Adressen kann 1:1 verwendet werden.
