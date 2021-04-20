@@ -413,8 +413,6 @@ Testergebnis: erfolgreich
 ![netplan](https://github.com/YangGorgoni/M300/blob/main/pictures/Netplan.PNG)
 
 
-
-
 ## Befehle
 
 |   Befehle   |    Bedeutung    |
@@ -427,3 +425,5 @@ Testergebnis: erfolgreich
 |  docker stop ID |  stoppt das image |
 |  docker rm ID |  löscht das image |
 |  docker rm ID --force |  löscht das image zwingend, auch wenn gestartet |
+
+## Sicherheiten
