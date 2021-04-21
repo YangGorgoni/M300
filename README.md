@@ -394,7 +394,7 @@ Mein Wissen: Ich habe noch nie was von Docker oder Containerisierung gehört. Mi
 
 ### Bestehende Docker-Container kombinieren
 
-1. Man soll sich sicher sein, dass man einen SQL Container am laufen hat, dass osTicket es zum speichern seiner  Daten verwenden kann.
+1. Man soll sich sicher sein, dass man einen SQL Container am laufen hat, dass osTicket es zum speichern seiner Daten verwenden kann.
 
 ````
 docker run --name osticket_mysql -d -e MYSQL_ROOT_PASSWORD=secret \
@@ -585,11 +585,18 @@ Hier einige Absicherungsmethoden:
 
 ### Weitere Sicherheitstipps
 
-* User setzen
+* Nicht root als Standarduser
 ````
-$ RUN groupadd -r user_grp && useradd -r -g user_grp user
-$ USER user
+$ RUN useradd -ms /bin/bash [neuerUsername] \
+USER [NeuerUsername] \
+WORKDIR /home/[NeuerUsername]
 ````
+* Read only
+````
+docker run --read-only -d -t --name [NameContainer] [Image]
+````
+Mit dem Befehl sollte können keine Änderungen am Dateisystem vorgenommen werden.
+
 * Netzwerkzugriff beschränken
 * setuid/setgid-Binaries entfernen
 * Speicher begrenzen
