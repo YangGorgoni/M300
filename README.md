@@ -382,7 +382,7 @@ Vorteile der Containerisierung mit Docker Die Containerisierung mit der frei ver
 
 Mein Wissen: Ich habe noch nie was von Docker oder Containerisierung gehört. Mit Inputs von meinem Lehrer habe ich verstanden, was das ungefähr ist. Ich konnte mir jedoch aber noch nicht richtig vorstellen, wie alles funktioniert. Ich habe angefangen dies umzusetzen und konnte einiges lernen. Jetzt ist mein Verständnis dafür mehr da.
 
-## Umsetzung
+### Bestehende Container als Backend, Desktop-App als Frontend  einsetzen
 
 1. Als erstes muss man auf den eigenen Server über VPN zugreifen können über CMD.
 2. Korrektes Passwort eingeben.
@@ -391,6 +391,75 @@ Mein Wissen: Ich habe noch nie was von Docker oder Containerisierung gehört. Mi
 5. Das Image bilden mit dem Befehl 'docker build -t webserver'
 6. schauen ob es erstellt ist 'docker images'
 7. Image starten 'docker run -dit --name webserver -p 5050:80 webserver' NICHT 8080, da der schon vergeben ist und das zu Konflikten kommen kann.
+
+### Bestehende Docker-Container kombinieren
+
+1. Man soll sich sicher sein, dass man einen SQL Container am laufen hat, dass osTicket es zum speichern seiner  Daten verwenden kann.
+
+````
+docker run --name osticket_mysql -d -e MYSQL_ROOT_PASSWORD=secret \
+ -e MYSQL_USER=osticket -e MYSQL_PASSWORD=secret -e MYSQL_DATABASE=osticket mariadb
+````
+Nun bringen wir das image zum laufen und linken den MySQL Container:
+````
+docker run --name osticket -d --link osticket_mysql:mysql -p 3030:80 osticket/osticket
+````
+### Volumes zur persistenten Datenablage eingerichtet
+
+Verwenden Sie ein schreibgeschütztes Volume, was zur Sicherheitsmassnahme dient.
+
+1. Den Befehl eingeben, dass Volume schreibgeschützt bereitgestellt wird:
+````
+$ docker run -d \
+  --name=nginxtest \
+  --mount source=nginx-vol,destination=/usr/share/nginx/html,readonly \
+  nginx:latest
+````
+2. Um es zu überprüfen schaut man es sich mit diesem Befehl an:
+````
+docker inspect nginxtest
+````
+3. Da wo Mounts steht sollten diese Einstellungen vorhanden sein - RW muss auf false eingestellt sein:
+
+````
+"Mounts": [
+    {
+        "Type": "volume",
+        "Name": "nginx-vol",
+        "Source": "/var/lib/docker/volumes/nginx-vol/_data",
+        "Destination": "/usr/share/nginx/html",
+        "Driver": "local",
+        "Mode": "",
+        "RW": false,
+        "Propagation": ""
+    }
+],
+````
+4. Man kann auch noch das Volumen überprüfen, dass ich bereitgestellt habe:
+````
+docker volume inspect nginx-vol
+````
+![Volume](https://github.com/YangGorgoni/M300/blob/main/pictures/überprüfung-volumen.PNG)
+
+### Sichern von einem Datenvolumen
+
+1. Erstellen von einem neuen Container z.B den Namen dbstore:
+````
+$ docker run -v /dbdata --name dbstore ubuntu /bin/bash
+````
+2. Im nächsten Befehl wird ein neuer Container gestartet und das Volume dbstore angehängt, dann mountet man ein lokales Hostverzeichnis als /backup und Inhalt dbdata Volume wird an eine backup.tar Datei im backup Verzeichnis.
+````
+$ docker run --rm --volumes-from dbstore -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /dbdata
+````
+3. Wenn der Befehl abgeschlossen ist und der Container stoppt, wird eine Sicherungskopie unseres dbdataVolumes erstellt.
+
+### Monitoring mit cAdvisor
+
+1. Mit dem Befehl kann man dieses Tool starten und man sieht dann auch schon das Ganze Monitoring.
+````
+docker run -d --name cadvisor -v /:/rootfs:ro -v /var/run:/var/run:rw -v /sys:/sys:ro -v /var/lib/docker/:/var/lib/docker:ro -p 2020:8080 google/cadvisor:latest
+````
+![cadvisor](https://github.com/YangGorgoni/M300/blob/main/pictures/monitoring.PNG)
 
 ## Testfälle
 
@@ -406,7 +475,16 @@ Funktioniert Whalesay?
 
 Testergebnis: erfolgreich
 
+Zugriff testen auf das Ticketsystem über http://10.2.45.17:3030:
 
+![ticket](https://github.com/YangGorgoni/M300/blob/main/pictures/ticket.PNG)
+
+Testergebnis: erfolgreich
+
+Monitoring Zugriff:
+![Monitoring](https://github.com/YangGorgoni/M300/blob/main/pictures/monitoring.PNG)
+
+Testergebnis: erfolgreich
 
 ## Netzwerkplan
 
@@ -507,10 +585,14 @@ Hier einige Absicherungsmethoden:
 
 ### Weitere Sicherheitstipps
 
+* User setzen
+````
+$ RUN groupadd -r user_grp && useradd -r -g user_grp user
+$ USER user
+````
 * Netzwerkzugriff beschränken
 * setuid/setgid-Binaries entfernen
 * Speicher begrenzen
-
 ````
 $ docker run -m 128m --memory-swap 128m amouat/stress stress --vm 1 --vm-bytes 127m -t 5s
 ````
@@ -535,6 +617,7 @@ $ docker run --cap-drop all --cap-add CHOWN ubuntu chown 100 /tmp
 ````
 $ docker run --ulimit cpu=12:14 amouat/stress stress --cpu 1
 ````
+
 
 ## Kubernetes
 
@@ -587,3 +670,11 @@ net:
   network_type: private_network
 ````
 Die restlichen Standardeinstellungen wie Host-only Netzwerk mit fixen IP-Adressen kann 1:1 verwendet werden.
+
+## Vergleich Wissenszuwachs
+
+Mein Wissen von jetzt zu vorher hat sich massiv  gestiegen. Ich wusste vorher gar nichts über diese Themen Container, Docker etc. Jetzt kann ich mir darunter was vorstellen und kenne auch die wichtigsten Befehle für docker.
+
+## Reflexion
+
+In dieser Lb02 Übung, habe ich einiges lernen können. Ich muss zugeben anfangs war mein Verständnis nicht so da, weil es ein bisschen kompliziert war. Mit einigen Übungen habe ich dann das Ganze mehr verstanden. Ich bin zwar noch kein Profi, aber ich kann einiges mitnehmen. Die Dokumentationen waren für mich nicht so hilfreich. Im Kompetenzraster wusste ich am Anfang nicht genau was erwartet wird von mir. Ich bin die einzelnen Punkte dann durchgegangen und habe immer etwas dazu probiert. Ich finde es war anpruchsvoller als die LB01.
