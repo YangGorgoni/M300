@@ -474,6 +474,11 @@ Das Ziel der kontinuierlichen Integration ist die Steigerung der Softwarequalit�
 
 Üblicherweise wird dafür nicht nur das Gesamtsystem neu gebaut, sondern es werden auch automatisierte Tests durchgeführt und Software-Metriken zur Messung der Softwarequalität erstellt.
 
+### Cloud Integration
+
+Darunter versteht man, dass heute viel mehr automatisiert wird. Früher musste man alles von Hand machen, Sachen immer wieder manuell erledigen. Durch die Automatisierung werden die Sachen schneller bereitgestellt. Das meiste ist heute auch in der Cloud Umgebung.
+
+
 ## Testfälle
 
 Zugriff testen über den Webbrowser http://IPVONSERVER:5050
