@@ -461,6 +461,19 @@ docker run -d --name cadvisor -v /:/rootfs:ro -v /var/run:/var/run:rw -v /sys:/s
 ````
 ![cadvisor](https://github.com/YangGorgoni/M300/blob/main/pictures/monitoring.PNG)
 
+### Image bereitstellen
+
+1. Zuerst muss man ein Container erstellen, mit dem Image, welches man auf Docker pushen will.
+2. Danach muss man diesen pushen ins Dockerhub.
+
+### Continuous Integration
+
+Ist der den Prozess des fortlaufenden Zusammenfügens von Komponenten zu einer Anwendung beschreibt.
+
+Das Ziel der kontinuierlichen Integration ist die Steigerung der Softwarequalität.
+
+Üblicherweise wird dafür nicht nur das Gesamtsystem neu gebaut, sondern es werden auch automatisierte Tests durchgeführt und Software-Metriken zur Messung der Softwarequalität erstellt.
+
 ## Testfälle
 
 Zugriff testen über den Webbrowser http://IPVONSERVER:5050
@@ -576,7 +589,7 @@ Möglichkeiten:
 
 Hier einige Absicherungsmethoden:
 
-* Container laufen in VM
+* Container laufen in VM, dass andere Benutzer oder Services angegriffen werden können.
 * Der Reverse-Proxy ist der einzige Container, der Port nach aussen freigibt
 * Alle Images laufen nicht als root
 * Images werden über eigenen Hash runtergeladen
